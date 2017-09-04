@@ -10,20 +10,20 @@ struct Node {
 };
 
 Node * append(Node* current, int data) {
-    if (current == NULL) {
+    if (current == nullptr) {
         current = new Node;
         current -> value = data;
-        current -> next = NULL;
+        current -> next = nullptr;
         return current;
     }
     else current -> next = append(current->next, data);
 }
 
 Node * insert(Node* current, int data) {
-    if (current == NULL) {
+    if (current == nullptr) {
         current = new Node;
         current -> value = data;
-        current -> next = NULL;
+        current -> next = nullptr;
         return current;
     }
     else if (data > current -> value) {
@@ -44,8 +44,18 @@ Node * del(Node* current, int data) {
     else current -> next = del(current -> next, data);
 }
 
+//reverse link list by splitting list in two and running reverse again on the remaining nodes
+Node * reverse(Node* C) {
+    if (C == nullptr) return nullptr;
+    if (C->next == nullptr) return C;
+    Node* remaining = reverse(C->next);
+    C->next->next = C;
+    C->next = nullptr; //Treat current node as if it was the last node
+    return remaining;
+}
+
 void print(Node* current) {
-    if (current == NULL) {
+    if (current == nullptr) {
         return;
     }
     else {
@@ -55,14 +65,14 @@ void print(Node* current) {
 }
 
 int sum(Node* current) {
-    if (current -> next == NULL) {
+    if (current -> next == nullptr) {
         return current -> value;
     }
     else return current -> value + sum(current -> next);
 }
 
 int main() {
-    Node* head = NULL;
+    Node* lst1 = nullptr;
     string input;
     cout << "Input numbers, end with empty line" << endl;
     cout << "Input a number: ";
@@ -70,36 +80,16 @@ int main() {
         if (input.empty()) {
             break;
         }
-        head = append(head, stoi(input));
+        lst1 = append(lst1, stoi(input));
         cout << "Input a number: ";
     }
     cout << "Current dataset: ";
-    print(head);
-    cout << endl;
-    cout << "Sum of all integers: " << sum(head) << endl;
-    cout << "Delete a number: ";
-    cin >> input;
-    if (input.empty()) {
-        cout << "No number to delete, continuing..." << endl;
-    }
-    else {
-        head = del(head, stoi(input));
-        cout << "Deleted first instance of " << input << ":" << endl;
-        print(head);
-        cout << endl;
-    }
-    cout << "Enter a number to insert: ";
-    cin >> input;
-    if (input.empty()) {
-        cout << "No number to insert, continuing..." << endl;
-    }
-    else {
-        head = insert(head, stoi(input));
-        cout << "Inserted " << input << ":" << endl;
-        print(head);
-        cout << endl;
-    }
-    cout << "finished" << endl;
+    print(lst1);
+    lst1 = reverse(lst1);
+    cout << endl << "Reversed dataset: ";
+    print(lst1);
+
+    cout << endl << "finished" << endl;
     return 0;
 }
 
