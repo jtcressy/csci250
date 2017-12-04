@@ -9,3 +9,5 @@ add_executable(recursive_btree ${TREE_SOURCE})
 set(LIST_SOURCE homework/recursive_linklist/main.cpp)
 add_executable(recursive_linklist ${LIST_SOURCE})
 
+set(TA_SOURCE homework/triangle_asterisks/main.cpp)
+add_executable(triangle_asterisks ${TA_SOURCE})
